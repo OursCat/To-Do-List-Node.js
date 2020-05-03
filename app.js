@@ -19,7 +19,7 @@ mongoose.connect(
 );
 
 const itemSchema = mongoose.Schema({
-	thing: { type: String, require: true },
+	thing: String,
 });
 
 const itemCollection = mongoose.model('item', itemSchema);
@@ -33,11 +33,15 @@ app.get('/', function (req, res) {
 
 app.post('/', function (req, res) {
 	const item = req.body.newItem;
-	const Input = new itemCollection({
-		thing: item,
-	});
-	Input.save();
-	res.redirect('/');
+	if (item === '') {
+		res.redirect('/');
+	} else {
+		const Input = new itemCollection({
+			thing: item,
+		});
+		Input.save();
+		res.redirect('/');
+	}
 });
 
 app.post('/delete', function (req, res) {
