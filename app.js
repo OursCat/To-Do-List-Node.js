@@ -19,7 +19,7 @@ mongoose.connect(
 );
 
 const itemSchema = mongoose.Schema({
-	thing: String,
+	thing: { type: String, require: true },
 });
 
 const itemCollection = mongoose.model('item', itemSchema);
