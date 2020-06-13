@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const date = require(__dirname + '/date.js');
@@ -10,8 +10,15 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+const user = process.env.USER;
+const password = process.env.PASSWORD;
+
 mongoose.connect(
-	'mongodb+srv://admin-jian:test123@cluster0-6s1df.mongodb.net/todoListDB',
+	'mongodb+srv://' +
+		user +
+		':' +
+		password +
+		'@cluster0-6s1df.mongodb.net/todoListDB',
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
@@ -61,6 +68,6 @@ app.post('/delete', function (req, res) {
 // 	});
 // });
 
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 5500, function () {
 	console.log('Server started on port 3000');
 });
